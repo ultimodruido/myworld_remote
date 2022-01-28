@@ -1,0 +1,104 @@
+"""
+Module: remote
+Provides a class Remote that handle the serial connection with
+the circuit express playground.
+"""
+from copy import copy
+
+from serial import Serial
+from .protocol import FREQ, SPEED, FUNCTION, SPEED_SIGNALS, FUNCTION_SIGNALS
+
+
+class Remote:
+    """
+        Class used to handle the communication with the playground express and use it as a remote
+
+        Create a simple button and move the train with protocol 'H' and toggle the lights::
+
+            r = Remote()
+            r.send('H', 'F1', 'LIGHT')
+
+        :param port: the port name of the simulated serial port on the playground express
+        :type port: str
+
+    """
+
+    def __init__(self, port: str = ''):
+        self.serial: Serial = None
+        self.port: str = port
+        self.ready: bool = False
+        if self.port != '':
+            self.configure(port)
+        # self.lock: bool = False
+
+    def configure(self, port: str):
+        """
+        Change the port at which we are connecting
+
+        :param port: port name, example 'COM3'
+        :type port: str
+        """
+        print(f"slot: configure {port}")
+        try:
+            self.serial = Serial(self.port, 115200)  # open serial port
+            self.ready = True
+        except Exception as e:
+            print(e)
+            self.port = ''
+            self.ready = False
+
+    def send(self, frequency, speed, command):
+        """
+        Converts the instruction into binary code and transmits it.
+        A double code will always be transmitted:
+         [command] + [speed]
+        For example if a toggle light command is sent, the actual speed
+        status need to be transmitted again otherwise the train will stop.
+
+        A transfer will start only if:
+        . the serial port was opened correctly
+        . [command] is one of the protocol.COMMAND_SIGNALS instructions
+        . [speed] is one of the protocol.SPEED_SIGNALS instructions
+
+        :param frequency: protocol frequency used for the conversion, example 'H'
+        :type frequency: str
+
+        :param speed: speed code you want to transmit
+        :type speed: str
+
+        :param command: port name, example 'COM3'
+        :type command: str
+        """
+        # preliminary controls
+        start_transfer = True
+        if self.ready is False:
+            pass
+            # TODO correct
+            # start_transfer = False
+        if command is None:
+            command = 'NO_FN'
+        if command not in FUNCTION_SIGNALS:
+            start_transfer = False
+        if speed not in SPEED_SIGNALS:
+            start_transfer = False
+        if start_transfer:
+            self._send(frequency, speed, command)
+
+    def _send(self, frequency, speed, function):
+
+        pre_code = f"{FREQ[frequency]}{SPEED[speed]}{FUNCTION[function]}"
+        # the second part of the code is inverted
+        post_code = pre_code.replace('1', '2')
+        post_code = post_code.replace('0', '1')
+        post_code = post_code.replace('2', '0')
+
+        cmd_code = f"C{pre_code}{post_code}!\n\r"
+
+        print(f"f: {frequency} - s: {speed} - fz: {function}")
+        print(f"playgroung code: {cmd_code}")
+
+        # self.serial.write(cmd_code.encode())
+
+    def close(self):
+        if self.ready:
+            self.serial.close()
