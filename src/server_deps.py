@@ -1,8 +1,8 @@
 import asyncio
 
-from classes.remote import Remote
-from classes.rolling_stock import RollingStock
-from classes.settings import load_settings, save_settings
+from submodules.remote import Remote
+from submodules.rolling_stock import RollingStock
+from submodules.settings import load_settings, save_settings
 
 remote = Remote()
 rolling_stock = RollingStock()
