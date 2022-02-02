@@ -2,19 +2,61 @@
 Module: protocol
 Contains the binary codes conversion for each command given by the MyWorld remote.
 
-Each remote has 7 speed commands: STOP, 3 forward speed and 3 backward speed
-SPEED_SIGNALS = ['STOP', 'F1', 'F2', 'F3', 'B1', 'B2', 'B3']
+Each remote has 8 speed commands: STOP, 3 forward speed and 3 backward speed and
+emergency stop which is recognized by every frequency.
+SPEED_SIGNALS = ['STOP', 'F1', 'F2', 'F3', 'B1', 'B2', 'B3', 'SOS']
 
-In addition there are emergency commands (SOS) linghts, horn and 2 sounds.
-COMMAND_SIGNALS = ['SOS', 'LIGHT', 'SOUND1', 'HORN', 'SOUND2']
+In addition there are functionalities like lights, horn and 2 sounds.
+An 'empty' value is also needed to properly describe all posssibilites.
+FUNCTION_SIGNALS = ['NO_FN', 'LIGHT', 'SOUND1', 'HORN', 'SOUND2']
 
-The IR protocol pulses used by Maerklin is as follow:
+
+The IR protocol pulses length used by Maerklin are as follow:
 4000 -> incipit
 bit 0 -> 500 + 500
 bit 1 -> 500 + 1500
 
-!!! CORRECT WRONG DESCRIPTION !!!
-To recreate the STOP signal for protocol H (binary: 10000000111111),
+
+NOTE: At the moment only frequencies G and H have been decoded.
+
+A signal is 14 bits long devided in 2 sequences of 7 bits.
+The second sequence is just the first with each bit inverted.
+
+bits
+[1]: frequency selector, obtained by the FREQ dictionary
+FREQ = {
+    'G': 0,
+    'H': 1,
+}
+
+[2:4]: speed selector, obtained by the SPEED dictionary
+SPEED = {
+    'STOP': '000',
+    'F1': '001',
+    'F2': '010',
+    'F3': '011',
+    'B1': '100',
+    'B2': '101',
+    'B3': '110',
+    'SOS': '111',
+}
+
+[5:7]: function selector, obtained by the FUNCTION dictionary
+FUNCTION = {
+    'NO_FN': '000',
+    'HORN': '001',
+    'SOUND1': '010',
+    'SOUND2': '011',
+    'LIGHT': '100',
+}
+
+To recreate the STOP signal for protocol H without function (binary: 10000000111111),
+code = f"{FREQ['H']}{SPEED['STOP']}{FUNCTION['NO_FN']}"
+code = 1 000 000
+
+we need to add the bit inverted neg_code = 0 111 111
+and the result is 10000000111111
+
 the signal starts with a pulse 4000 long and then use the above conversion
 to get the pulses length:
 bit 1 -> 500 + 1500
@@ -26,12 +68,7 @@ Signals STOP: [4000, 500, 1500, 500, 500, 500, 500, 500, 500,
     500, 500,500, 500, 500, 500, 500, 500, 500, 1500,
     500, 1500, 500,1500, 500, 1500, 500, 1500, 500, 1500]
 
-the protocol dictionary returns the desired protocol dictionary:
-
-protocol['H']['STOP'] returns '10000000111111' as a string
-
-The emergency command is different for each protocol but recognized by every
-vehicle, so we can say it is protocol independent.
+Refer to the playground code to convert the bits into pulses
 """
 
 SPEED_SIGNALS = ['STOP', 'F1', 'F2', 'F3', 'B1', 'B2', 'B3', 'SOS']
