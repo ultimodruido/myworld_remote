@@ -5,7 +5,7 @@ It stores the information about active protocol and speed setting.
 """
 from dataclasses import dataclass, field
 
-EXPORT_FIELDS = ['name', 'frequency']
+EXPORT_FIELDS = ['name', 'frequency', 'box']
 
 
 @dataclass
@@ -23,6 +23,7 @@ class Train:
     """
     name: str
     frequency: str
+    box: str
     update_callback: callable = field(default=None, repr=False)
     speed: str = field(default="STOP", init=False)
 

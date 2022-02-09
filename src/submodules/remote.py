@@ -50,8 +50,9 @@ class Remote:
         """
         print(f"slot: configure {port}")
         try:
-            self.serial = Serial(self.port, 115200)  # open serial port
+            self.serial = Serial(port, 115200)  # open serial port
             self.ready = True
+            self.port = port
         except Exception as e:
             print(e)
             self.port = ''
@@ -108,3 +109,5 @@ class Remote:
     def close(self):
         if self.ready:
             self.serial.close()
+        else:
+            print("Transmission skipped: not ready")

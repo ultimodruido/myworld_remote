@@ -26,11 +26,13 @@ async def startup():
 
     saved_config = load_settings()
     if saved_config:
-        remote.configure(saved_config['port'])
+
         for train in saved_config['rolling_stock']:
             rolling_stock.add_train(**train, update_callback=remote.send)
+        #await asyncio.sleep(2)
+        remote.configure(saved_config['port'])
 
 
 async def shutdown():
-    remote.close()
     save_settings(remote.port, rolling_stock.get_train_list())
+    remote.close()

@@ -15,6 +15,14 @@ async def train_list():
     return rolling_stock.get_train_list()
 
 
+@router.post("/train/{train_id}/speed/{speed_value}")
+async def set_train_speed(train_id: int, speed_value: str):
+    train = rolling_stock.get_train_by_id(train_id)
+    if train:
+        train.update(speed=speed_value)
+    return {"message": "OK"}
+
+
 @router.post("/train/{train_id}/light")
 async def toggle_train_light(train_id: int):
     train = rolling_stock.get_train_by_id(train_id)
@@ -22,9 +30,22 @@ async def toggle_train_light(train_id: int):
         train.toggle_light()
 
 
-@router.post("/train/{train_id}/speed/{speed_value}")
-async def set_train_speed(train_id: int, speed_value: str):
+@router.post("/train/{train_id}/horn")
+async def toggle_train_light(train_id: int):
     train = rolling_stock.get_train_by_id(train_id)
     if train:
-        train.update(speed=speed_value)
-    return {"message": "OK"}
+        train.horn()
+
+
+@router.post("/train/{train_id}/sound1")
+async def toggle_train_light(train_id: int):
+    train = rolling_stock.get_train_by_id(train_id)
+    if train:
+        train.play_sound('SOUND1')
+
+
+@router.post("/train/{train_id}/sound2")
+async def toggle_train_light(train_id: int):
+    train = rolling_stock.get_train_by_id(train_id)
+    if train:
+        train.play_sound('SOUND2')

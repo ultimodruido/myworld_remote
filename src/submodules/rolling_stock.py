@@ -12,8 +12,8 @@ class RollingStock:
         """Make class indexable"""
         return self.trains[item]
 
-    def add_train(self, name: str, frequency: str, update_callback: callable) -> Train:
-        train = Train(name, frequency, update_callback)
+    def add_train(self, name: str, frequency: str, box: str, update_callback: callable) -> Train:
+        train = Train(name, frequency, box, update_callback)
         self.trains.append(train)
         return train
 
