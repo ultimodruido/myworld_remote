@@ -1,0 +1,8 @@
+pyserial
+fastapi
+uvicorn[standard]
+
+# Dev/Deployment
+sphinx
+sphinx_rtd_theme
+pyinstaller

@@ -1,5 +1,5 @@
 import asyncio
-
+from time import strftime
 from submodules.remote import Remote
 from submodules.rolling_stock import RollingStock
 from submodules.settings import load_settings, save_settings
@@ -10,10 +10,11 @@ rolling_stock = RollingStock()
 
 async def main_loop():
     while True:
+        print(f"running main_loop {strftime('%H:%M:%S')}")
         for train in rolling_stock:
             print(f"updating train: {train}")
             train.update()
-        print("running main_loop")
+
         await asyncio.sleep(3)
 
 

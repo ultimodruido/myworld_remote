@@ -101,8 +101,8 @@ class Remote:
 
         cmd_code = f"C{pre_code}{post_code}!\n\r"
 
-        print(f"f: {frequency} - s: {speed} - fz: {function}")
-        print(f"playgroung code: {cmd_code}")
+        #print(f"f: {frequency} - s: {speed} - fz: {function}")
+        #print(f"playgroung code: {cmd_code}")
 
         self.serial.write(cmd_code.encode())
 
