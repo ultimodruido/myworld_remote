@@ -30,3 +30,10 @@ class RollingStock:
         # train_collection = {idx: train for idx, train in enumerate(self.trains)}
         train_collection = [train.get_dict_repr() for train in self.trains]
         return train_collection
+
+    def remove_train(self, train_id):
+        try:
+            self.trains.pop(train_id)
+        except IndexError:
+            return False
+        return True

@@ -54,6 +54,15 @@ class Train:
     def horn(self):
         self.update(command='HORN')
 
+    def set_name(self, name: str):
+        self.name = name
+
+    def set_frequency(self, frequency: str):
+        self.frequency = frequency
+
+    def set_box(self, box):
+        self.box = box
+
     def get_dict_repr(self):
         """Returns a simplified dictionary suitable for JSON export"""
         return {key: value for key, value in self.__dict__.items() if key in EXPORT_FIELDS}
