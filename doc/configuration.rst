@@ -12,7 +12,7 @@ As of release 0.1 each train has 3 settings:
 * frequency: used frequency to communicate with the train
 * box (optional): the number of the box can used from the UIs to render an image of the product
 
-Example of configuration file::
+Example of configuration file ::
 
         {
           "port": "COM3",

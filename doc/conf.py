@@ -20,8 +20,8 @@ sys.path.insert(1, os.path.abspath('../src'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'Brymantic UI'
-copyright = '2020, '
+project = 'MyWorld universal remote'
+copyright = '2022 - GPL'
 author = 'ultimodruido'
 
 # The full version, including alpha/beta/rc tags
@@ -59,7 +59,7 @@ html_theme = 'sphinx_rtd_theme'
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+html_static_path = ['']
 
 html_break_level = 1
 
