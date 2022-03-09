@@ -12,7 +12,6 @@ The system is made of few elements:
 * Web framework API (based on `FastAPI`_) to receive inputs from multiple UIs.
 
 
-
 .. warning::
     The software can at the moment replicate only frequencies G and H
 
