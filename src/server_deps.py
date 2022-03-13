@@ -13,9 +13,9 @@ async def main_loop():
         print(f"running main_loop {strftime('%H:%M:%S')}")
         for train in rolling_stock:
             print(f"updating train: {train}")
-            train.update()
+            await train.update()
 
-        await asyncio.sleep(3)
+        await asyncio.sleep(5)
 
 
 async def startup():

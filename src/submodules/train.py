@@ -27,7 +27,7 @@ class Train:
     update_callback: callable = field(default=None, repr=False)
     speed: str = field(default="STOP", init=False)
 
-    def update(self, speed=None, command=None):
+    async def update(self, speed=None, command=None):
         """
         Update the status of the train. speed and other commands are kept separate,
         because the train stops if for example lights are toggled.
@@ -42,17 +42,17 @@ class Train:
         if speed:
             self.speed = speed
         # self.status(command, speed)
-        self.update_callback(self.frequency, self.speed, command)
+        await self.update_callback(self.frequency, self.speed, command)
 
-    def toggle_light(self):
-        self.update(command='LIGHT')
+    async def toggle_light(self):
+        await self.update(command='LIGHT')
 
-    def play_sound(self, sound):
+    async def play_sound(self, sound):
         if sound in ['SOUND1', 'SOUND2']:
-            self.update(command=sound)
+            await self.update(command=sound)
 
-    def horn(self):
-        self.update(command='HORN')
+    async def horn(self):
+        await self.update(command='HORN')
 
     def set_name(self, name: str):
         self.name = name

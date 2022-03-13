@@ -6,7 +6,10 @@ the circuit express playground.
 from typing import Optional
 
 from serial import Serial
+from asyncio import Lock
 from .protocol import FREQ, SPEED, FUNCTION, SPEED_SIGNALS, FUNCTION_SIGNALS
+
+remote_serial_lock = Lock()
 
 
 def _inverted_bit_char(c):
@@ -41,14 +44,14 @@ class Remote:
             self.configure(port)
         # self.lock: bool = False
 
-    def configure(self, port: str):
+    def configure(self, port: str) -> bool:
         """
         Change the port at which we are connecting
 
         :param port: port name, example 'COM3'
         :type port: str
         """
-        print(f"slot: configure {port}")
+        print(f"remote: configured serial port {port}")
         try:
             self.serial = Serial(port, 115200)  # open serial port
             self.ready = True
@@ -57,8 +60,9 @@ class Remote:
             print(e)
             self.port = ''
             self.ready = False
+        return self.ready
 
-    def send(self, frequency, speed, command):
+    async def send(self, frequency, speed, command):
         """
         Converts the instruction into binary code and transmits it.
         A double code will always be transmitted:
@@ -91,9 +95,9 @@ class Remote:
         if speed not in SPEED_SIGNALS:
             start_transfer = False
         if start_transfer:
-            self._send(frequency, speed, command)
+            await self._send(frequency, speed, command)
 
-    def _send(self, frequency, speed, function):
+    async def _send(self, frequency, speed, function):
 
         pre_code = f"{FREQ[frequency]}{SPEED[speed]}{FUNCTION[function]}"
         # the second part of the code is inverted
@@ -101,10 +105,11 @@ class Remote:
 
         cmd_code = f"C{pre_code}{post_code}!\n\r"
 
-        #print(f"f: {frequency} - s: {speed} - fz: {function}")
-        #print(f"playgroung code: {cmd_code}")
-
-        self.serial.write(cmd_code.encode())
+        # print(f"f: {frequency} - s: {speed} - fz: {function}")
+        # print(f"playgroung code: {cmd_code}")
+        async with remote_serial_lock:
+            print(f"Sending over serial: {frequency} - s: {speed} - fz: {function} ~~ code: {cmd_code}")
+            self.serial.write(cmd_code.encode())
 
     def close(self):
         if self.ready:

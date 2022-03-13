@@ -31,7 +31,7 @@ class RollingStock:
         train_collection = [train.get_dict_repr() for train in self.trains]
         return train_collection
 
-    def remove_train(self, train_id):
+    def remove_train(self, train_id) -> bool:
         try:
             self.trains.pop(train_id)
         except IndexError:
