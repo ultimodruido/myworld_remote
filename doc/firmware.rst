@@ -12,8 +12,9 @@ just rename them ``code.py`` and copy them in the circuit playground, the routin
 
 This script is used to decode the signals from the remote. An example of the output ::
 
-    Received:  [4025, 498, 1531, 505, 1533, 494, 1524, 529, 1510, 502, 497, 503, 495, 512, 497, 504, 495, 504, 504, 494, 504, 504, 504, 497, 1532, 494, 1525, 512, 1526]
-    Decoded: 0x3c07
+    Received:  [3998, 493, 1515, 507, 490, 502, 496, 497, 491, 501, 498, 505, 493, 500, 498, 495, 493, 501, 1488, 533, 1514, 499, 1508, 512, 1516, 495, 1512, 511, 1518]
+    Decoded: 0x 0x203f
+    Decoded: b 10000000111111
 
 
 .. data:: transmitter_routine.py
