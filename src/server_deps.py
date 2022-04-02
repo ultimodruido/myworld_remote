@@ -1,23 +1,34 @@
 import asyncio
+
 from time import strftime
+
 from submodules.remote import Remote
 from submodules.rolling_stock import RollingStock
 from submodules.settings import load_settings, save_settings
+from lock import data_protection_lock
 
 remote = Remote()
 rolling_stock = RollingStock()
 
 
+########################
+# Main loop for updating status transmission
+########################
 async def main_loop():
     while True:
-        print(f"running main_loop {strftime('%H:%M:%S')}")
-        for train in rolling_stock:
-            print(f"updating train: {train}")
-            await train.update()
+        # get the lock to avoid concurrent writing on train values
+        async with data_protection_lock:
+            print(f"running main_loop {strftime('%H:%M:%S')}")
+            for train in rolling_stock:
+                print(f"updating train: {train}")
+                train.update()
 
         await asyncio.sleep(5)
 
 
+########################
+# Start & Stop events handlers
+########################
 async def startup():
     """Grab the uvicorn event loop to add the main_loop function as a task.
     Load previous settings if available"""
@@ -30,10 +41,18 @@ async def startup():
 
         for train in saved_config['rolling_stock']:
             rolling_stock.add_train(**train, update_callback=remote.send)
-        #await asyncio.sleep(2)
+
         remote.configure(saved_config['port'])
 
 
 async def shutdown():
     save_settings(remote.port, rolling_stock.get_train_list())
     remote.close()
+
+
+########################
+# Communication messages
+########################
+def reply(value: bool, **kwargs) -> dict:
+    kwargs["reply"] = value
+    return kwargs

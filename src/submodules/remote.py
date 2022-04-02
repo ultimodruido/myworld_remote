@@ -4,12 +4,9 @@ Provides a class Remote that handle the serial connection with
 the circuit express playground.
 """
 from typing import Optional
-
 from serial import Serial
-from asyncio import Lock
-from .protocol import FREQ, SPEED, FUNCTION, SPEED_SIGNALS, FUNCTION_SIGNALS
 
-remote_serial_lock = Lock()
+from .protocol import FREQ, SPEED, FUNCTION, SPEED_SIGNALS, FUNCTION_SIGNALS
 
 
 def _inverted_bit_char(c):
@@ -62,7 +59,7 @@ class Remote:
             self.ready = False
         return self.ready
 
-    async def send(self, frequency, speed, command):
+    def send(self, frequency, speed, command):
         """
         Converts the instruction into binary code and transmits it.
         A double code will always be transmitted:
@@ -95,9 +92,9 @@ class Remote:
         if speed not in SPEED_SIGNALS:
             start_transfer = False
         if start_transfer:
-            await self._send(frequency, speed, command)
+            self._send(frequency, speed, command)
 
-    async def _send(self, frequency, speed, function):
+    def _send(self, frequency, speed, function):
 
         pre_code = f"{FREQ[frequency]}{SPEED[speed]}{FUNCTION[function]}"
         # the second part of the code is inverted
@@ -107,9 +104,8 @@ class Remote:
 
         # print(f"f: {frequency} - s: {speed} - fz: {function}")
         # print(f"playgroung code: {cmd_code}")
-        async with remote_serial_lock:
-            print(f"Sending over serial: {frequency} - s: {speed} - fz: {function} ~~ code: {cmd_code}")
-            self.serial.write(cmd_code.encode())
+        print(f"Sending over serial: {frequency} - s: {speed} - fz: {function} ~~ code: {cmd_code[:-2]}")
+        self.serial.write(cmd_code.encode())
 
     def close(self):
         if self.ready:
