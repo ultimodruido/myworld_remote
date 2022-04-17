@@ -5,7 +5,6 @@
 
     usage.rst
     configuration.rst
-    api.rst
     protocol.rst
     firmware.rst
 

@@ -5,12 +5,12 @@ Protocol
 Contains the binary codes conversion for each command given by the MyWorld remote.
 
 Each remote has 8 speed commands: STOP, 3 forward speed and 3 backward speed and
-emergency stop which is recognized by every frequency. ::
+emergency stop which seems to be recognized by every frequency. ::
 
     SPEED_SIGNALS = ['STOP', 'F1', 'F2', 'F3', 'B1', 'B2', 'B3', 'SOS']
 
 In addition there are functionalities like lights, horn and 2 sounds.
-An 'empty' value is also needed to properly describe all possibilities. ::
+An *empty* value is also needed to properly describe all possibilities. ::
 
     FUNCTION_SIGNALS = ['NO_FN', 'LIGHT', 'SOUND1', 'HORN', 'SOUND2']
 
@@ -24,8 +24,9 @@ The IR protocol pulses length used by Maerklin are as follow::
 .. WARNING ::
     At the moment only frequencies G and H have been decoded.
 
-A signal is 14 bits long divided in 2 sequences of 7 bits.
-The second sequence is just the first with each bit inverted.
+A signal is 14 bits long, each signal is divided into 2 sequences of 7.
+The second sequence is just like the first one, but with each bit inverted.
+In the following code snippets the meaning of each bit will be explained.
 
 .. data:: bit [1]: frequency selector, obtained by the FREQ dictionary
 
@@ -63,7 +64,7 @@ The second sequence is just the first with each bit inverted.
         'LIGHT': '100',
     }
 
-To recreate the STOP signal for protocol H without function (binary: 10000000111111) ::
+To recreate the STOP signal for protocol H without function::
 
     code = f"{FREQ['H']}{SPEED['STOP']}{FUNCTION['NO_FN']}"
     code = 1 000 000
@@ -74,22 +75,22 @@ we need to add the bit inverted ::
 
 and the result is ::
 
-    code = 10000000111111
+    code = 1 000 000   0 111 111
 
-the signal starts with a pulse 4000 long and then use the above conversion
-to get the pulses length:
-bit 1 -> 500 + 1500
-7 times bit 0 -> 500 + 500
-6 times bit 1 -> 500 + 1500
+the signal starts with a pulse 4000 long and then uses the conversion explained
+at the top of the page to get the pulses length:
 
-Result ::
+* bit 1 -> 500 + 1500
+* 7 times bit 0 -> 500 + 500
+* 6 times bit 1 -> 500 + 1500
+
+Result::
 
     Signals STOP: [4000, 500, 1500, 500, 500, 500, 500, 500, 500,
         500, 500,500, 500, 500, 500, 500, 500, 500, 1500,
         500, 1500, 500,1500, 500, 1500, 500, 1500, 500, 1500]
 
-Refer to the playground code to convert the bits into pulses
-
+Refer to the playground firmware to convert the bits into pulses.
 """
 
 SPEED_SIGNALS = ['STOP', 'F1', 'F2', 'F3', 'B1', 'B2', 'B3', 'SOS']

@@ -8,7 +8,7 @@ It contains:
 
 As of release 0.1 each train has 3 settings:
 
-* name:
+* name: transmitted to the UI for identification purposes
 * frequency: used frequency to communicate with the train
 * box (optional): the number of the box can used from the UIs to render an image of the product
 
