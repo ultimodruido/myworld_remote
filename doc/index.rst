@@ -7,6 +7,7 @@
     configuration.rst
     protocol.rst
     firmware.rst
+    roadmap.rst
 
 
 
