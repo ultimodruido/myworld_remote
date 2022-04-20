@@ -5,7 +5,7 @@ manage all endpoints related to the configuration of the system
 Module: router - config
 """
 from server_deps import rolling_stock, remote, reply
-from lock import data_protection_lock
+from server_lock import data_protection_lock
 
 router = APIRouter()
 

@@ -4,24 +4,6 @@ from server_deps import startup, shutdown
 from routers import train, config
 
 
-"""
-API
-# INFO
-/remote_status
-
-# CONFIGURATION
-/register/remote/{portname}
-/register/train/{name}/{frequency}/
-/remove/train/{train_id}
-
-# TRAIN
-/train_list
-/train/{train_id}/speed/{speed_value}
-/train/{train_id}/light
-/train/{train_id}/sound/{sound_value}
-/train/{train_id}/horn
-"""
-
 app = FastAPI()
 app.include_router(train.router)
 app.include_router(config.router)

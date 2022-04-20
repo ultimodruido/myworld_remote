@@ -4,7 +4,7 @@ manage all endpoints related to train control
 """
 from fastapi import APIRouter
 from server_deps import rolling_stock, reply
-from lock import data_protection_lock
+from server_lock import data_protection_lock
 
 router = APIRouter()
 

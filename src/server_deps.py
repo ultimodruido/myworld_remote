@@ -5,7 +5,7 @@ from time import strftime
 from submodules.remote import Remote
 from submodules.rolling_stock import RollingStock
 from submodules.settings import load_settings, save_settings
-from lock import data_protection_lock
+from server_lock import data_protection_lock
 
 remote = Remote()
 rolling_stock = RollingStock()
@@ -15,6 +15,10 @@ rolling_stock = RollingStock()
 # Main loop for updating status transmission
 ########################
 async def main_loop():
+    """Maerklin MyWorld trains are configured to automatically shutdown if no command is sent for a longer period.
+    With a simple infinite loop that transmits the train status every few seconds we ensure that every train is
+    running as desired.
+    """
     while True:
         # get the lock to avoid concurrent writing on train values
         async with data_protection_lock:
@@ -46,6 +50,7 @@ async def startup():
 
 
 async def shutdown():
+    """Store settings to file, and properly close the serial communication."""
     save_settings(remote.port, rolling_stock.get_train_list())
     remote.close()
 
