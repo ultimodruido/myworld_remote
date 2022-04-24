@@ -1,6 +1,7 @@
 import asyncio
 
 from time import strftime
+from pydantic import BaseModel
 
 from submodules.remote import Remote
 from submodules.rolling_stock import RollingStock
@@ -58,6 +59,17 @@ async def shutdown():
 ########################
 # Communication messages
 ########################
-def reply(value: bool, **kwargs) -> dict:
-    kwargs["reply"] = value
-    return kwargs
+class Message(BaseModel):
+    """Creates the data structure transmitted in the reply.
+    Has 3 keys:
+     - entry_point -> API address requested
+     - result -> bool value to inform about the outcome of the request
+     - data -> additional data to be transmitted"""
+    entry_point: str
+    result: bool
+    data: dict
+
+
+def reply(entry_point: str, result: bool, **kwargs) -> Message:
+    """Support function to instantiate the Message reply"""
+    return Message(entry_point=entry_point, result=result, data=kwargs)

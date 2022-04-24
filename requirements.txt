@@ -1,8 +1,10 @@
-pyserial
-fastapi
-uvicorn[standard]
+pyserial~=3.5
+fastapi~=0.71.0
+uvicorn[standard]~=0.17.0
+pydantic~=1.9.0
 
 # Dev/Deployment
 sphinx
 sphinx_rtd_theme
 pyinstaller
+
