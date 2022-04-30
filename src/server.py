@@ -24,7 +24,7 @@ app.add_middleware(
 
 @app.get("/")
 async def root():
-    return {"message": "Maerklin MyWorld universal remote API"}
+    return "Maerklin MyWorld universal remote API"
 
 
 @app.on_event("startup")
