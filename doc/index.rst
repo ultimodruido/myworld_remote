@@ -5,8 +5,8 @@
 
     usage.rst
     configuration.rst
-    protocol.rst
     api.rst
+    protocol.rst
     firmware.rst
     roadmap.rst
 

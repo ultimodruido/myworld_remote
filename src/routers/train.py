@@ -2,11 +2,12 @@
 Module: router - trains
 manage all endpoints related to train control
 """
-from enum import Enum
+from fastapi import APIRouter, Request, Path
 
-from fastapi import APIRouter, Request
 from server_deps import rolling_stock, reply, Message
 from server_lock import data_protection_lock
+
+from .params_docstring import param_doc
 
 router = APIRouter()
 
@@ -47,20 +48,12 @@ async def train_list(request: Request):
 
 
 @router.post("/train/{train_id}/speed/{speed_value}", response_model=Message)
-async def set_train_speed(train_id: int, speed_value: str, request: Request):
+async def set_train_speed(request: Request,
+                          train_id: int = Path(..., description=param_doc['train_id']),
+                          speed_value: str = Path(..., description=param_doc['speed_value'])
+                          ):
     """
     Change speed of a train
-
-    *train_id*: id number of the train as obtained from the '/train_list' command
-    *speed_value*: speed code
-
-    Example response:
-
-        {
-            "entry_point": "/register/train/1/box/22456",
-            "result": true,
-            "data": {}
-        }
     """
     result = False
     async with data_protection_lock:
@@ -72,19 +65,11 @@ async def set_train_speed(train_id: int, speed_value: str, request: Request):
 
 
 @router.post("/train/{train_id}/light", response_model=Message)
-async def toggle_train_light(train_id: int, request: Request):
+async def toggle_train_light(request: Request,
+                             train_id: int = Path(..., description=param_doc['train_id'])
+                             ):
     """
     Toggle the light of a train
-
-    *train_id*: id number of the train as obtained from the '/train_list' command
-
-    Example response:
-
-        {
-            "entry_point": "/register/train/1/light",
-            "result": true,
-            "data": {}
-        }
     """
     result = False
     async with data_protection_lock:
@@ -96,19 +81,11 @@ async def toggle_train_light(train_id: int, request: Request):
 
 
 @router.post("/train/{train_id}/horn", response_model=Message)
-async def blow_train_horn(train_id: int, request: Request):
+async def blow_train_horn(request: Request,
+                          train_id: int = Path(..., description=param_doc['train_id'])
+                          ):
     """
     Blow the horn of a train
-
-    *train_id*: id number of the train as obtained from the '/train_list' command
-
-    Example response:
-
-        {
-            "entry_point": "/register/train/1/horn",
-            "result": true,
-            "data": {}
-        }
     """
     result = False
     async with data_protection_lock:
@@ -120,19 +97,11 @@ async def blow_train_horn(train_id: int, request: Request):
 
 
 @router.post("/train/{train_id}/sound1", response_model=Message)
-async def train_sound1(train_id: int, request: Request):
+async def train_sound1(request: Request,
+                       train_id: int = Path(..., description=param_doc['train_id'])
+                       ):
     """
     Play sound 1
-
-    *train_id*: id number of the train as obtained from the '/train_list' command
-
-    Example response:
-
-        {
-            "entry_point": "/register/train/1/sound1",
-            "result": true,
-            "data": {}
-        }
     """
     result = False
     async with data_protection_lock:
@@ -144,19 +113,11 @@ async def train_sound1(train_id: int, request: Request):
 
 
 @router.post("/train/{train_id}/sound2", response_model=Message)
-async def train_sound2(train_id: int, request: Request):
+async def train_sound2(request: Request,
+                       train_id: int = Path(..., description=param_doc['train_id'])
+                       ):
     """
     Play sound 2
-
-    *train_id*: id number of the train as obtained from the '/train_list' command
-
-    Example response:
-
-        {
-            "entry_point": "/register/train/1/sound2",
-            "result": true,
-            "data": {}
-        }
     """
     result = False
     async with data_protection_lock:
