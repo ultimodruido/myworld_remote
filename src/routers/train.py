@@ -6,6 +6,7 @@ from fastapi import APIRouter, Request, Path
 
 from server_deps import rolling_stock, reply, Message
 from server_lock import data_protection_lock
+from submodules.rolling_stock import UnknownTrainError
 
 from .params_docstring import param_doc
 
@@ -55,13 +56,13 @@ async def set_train_speed(request: Request,
     """
     Change speed of a train
     """
-    result = False
     async with data_protection_lock:
-        train = rolling_stock.get_train_by_id(train_id)
-        if train:
+        try:
+            train = rolling_stock.get_train_by_id(train_id)
             train.update(speed=speed_value)
-            result = True
-    return reply(request.url.path, result)
+            return reply(request.url.path, True)
+        except UnknownTrainError as e:
+            return reply(request.url.path, False, error=e.message)
 
 
 @router.post("/train/{train_id}/light", response_model=Message)
@@ -71,13 +72,13 @@ async def toggle_train_light(request: Request,
     """
     Toggle the light of a train
     """
-    result = False
     async with data_protection_lock:
-        train = rolling_stock.get_train_by_id(train_id)
-        if train:
+        try:
+            train = rolling_stock.get_train_by_id(train_id)
             train.toggle_light()
-            result = True
-    return reply(request.url.path, result)
+            return reply(request.url.path, True)
+        except UnknownTrainError as e:
+            return reply(request.url.path, False, error=e.message)
 
 
 @router.post("/train/{train_id}/horn", response_model=Message)
@@ -87,13 +88,13 @@ async def blow_train_horn(request: Request,
     """
     Blow the horn of a train
     """
-    result = False
     async with data_protection_lock:
-        train = rolling_stock.get_train_by_id(train_id)
-        if train:
+        try:
+            train = rolling_stock.get_train_by_id(train_id)
             train.horn()
-            result = True
-    return reply(request.url.path, result)
+            return reply(request.url.path, True)
+        except UnknownTrainError as e:
+            return reply(request.url.path, False, error=e.message)
 
 
 @router.post("/train/{train_id}/sound1", response_model=Message)
@@ -103,13 +104,13 @@ async def train_sound1(request: Request,
     """
     Play sound 1
     """
-    result = False
     async with data_protection_lock:
-        train = rolling_stock.get_train_by_id(train_id)
-        if train:
+        try:
+            train = rolling_stock.get_train_by_id(train_id)
             train.play_sound('SOUND1')
-            result = True
-    return reply(request.url.path, result)
+            return reply(request.url.path, True)
+        except UnknownTrainError as e:
+            return reply(request.url.path, False, error=e.message)
 
 
 @router.post("/train/{train_id}/sound2", response_model=Message)
@@ -119,10 +120,10 @@ async def train_sound2(request: Request,
     """
     Play sound 2
     """
-    result = False
     async with data_protection_lock:
-        train = rolling_stock.get_train_by_id(train_id)
-        if train:
+        try:
+            train = rolling_stock.get_train_by_id(train_id)
             train.play_sound('SOUND2')
-            result = True
-    return reply(request.url.path, result)
+            return reply(request.url.path, True)
+        except UnknownTrainError as e:
+            return reply(request.url.path, False, error=e.message)

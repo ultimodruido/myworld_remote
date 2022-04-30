@@ -6,6 +6,7 @@ from fastapi import APIRouter, Request, Path
 
 from server_deps import rolling_stock, remote, reply, Message
 from server_lock import data_protection_lock
+from submodules.rolling_stock import UnknownTrainError
 
 from .params_docstring import param_doc
 
@@ -63,7 +64,7 @@ async def register_remote(request: Request,
 ######################
 @router.post("/register/newtrain/{train_name}/{frequency}", response_model=Message)
 async def register_train(request: Request,
-                         train_name: str = Path(..., description=param_doc['train_name']),
+                         train_name: int = Path(..., description=param_doc['train_name']),
                          frequency: str = Path(..., description=param_doc['frequency'])
                          ):
     """
@@ -76,61 +77,64 @@ async def register_train(request: Request,
 
 @router.post("/register/train/{train_id}/name/{train_name}", response_model=Message)
 async def set_train_name(request: Request,
-                         train_id: str = Path(..., description=param_doc['train_id']),
+                         train_id: int = Path(..., description=param_doc['train_id']),
                          train_name: str = Path(..., description=param_doc['train_name'])
                          ):
     """
     Rename a registered train
     """
-    result = False
     async with data_protection_lock:
-        train = rolling_stock.get_train_by_id(train_id)
-        if train:
+        try:
+            train = rolling_stock.get_train_by_id(train_id)
             train.set_name(train_name)
-            result = True
-    return reply(request.url.path, result)
+            return reply(request.url.path, True)
+        except UnknownTrainError as e:
+            return reply(request.url.path, False, error=e.message)
 
 
 @router.post("/register/train/{train_id}/frequency/{frequency}", response_model=Message)
 async def set_train_frequency(request: Request,
-                              train_id: str = Path(..., description=param_doc['train_id']),
+                              train_id: int = Path(..., description=param_doc['train_id']),
                               frequency: str = Path(..., description=param_doc['frequency'])
                               ):
     """
     Change communication frequency of a registered train
     """
-    result = False
     async with data_protection_lock:
-        train = rolling_stock.get_train_by_id(train_id)
-        if train:
+        try:
+            train = rolling_stock.get_train_by_id(train_id)
             train.set_frequency(frequency)
-            result = True
-    return reply(request.url.path, result)
+            return reply(request.url.path, True)
+        except UnknownTrainError as e:
+            return reply(request.url.path, False, error=e.message)
 
 
 @router.post("/register/train/{train_id}/box/{box_number}", response_model=Message)
 async def set_train_box(request: Request,
-                        train_id: str = Path(..., description=param_doc['train_id']),
+                        train_id: int = Path(..., description=param_doc['train_id']),
                         box_number: str = Path(..., description=param_doc['box_number'])
                         ):
     """
     Add a box number to a registered train
     """
-    result = False
     async with data_protection_lock:
-        train = rolling_stock.get_train_by_id(train_id)
-        if train:
+        try:
+            train = rolling_stock.get_train_by_id(train_id)
             train.set_box(box_number)
-            result = True
-    return reply(request.url.path, result)
+            return reply(request.url.path, True)
+        except UnknownTrainError as e:
+            return reply(request.url.path, False, error=e.message)
 
 
 @router.post("/remove/train/{train_id}", response_model=Message)
 async def remove_train(request: Request,
-                       train_id: str = Path(..., description=param_doc['train_id'])):
+                       train_id: int = Path(..., description=param_doc['train_id'])):
     """
     Remove a registered train
     """
     async with data_protection_lock:
-        result = rolling_stock.remove_train(train_id)
-    return reply(request.url.path, result)
+        try:
+            rolling_stock.remove_train(train_id)
+            return reply(request.url.path, True)
+        except UnknownTrainError as e:
+            return reply(request.url.path, False, error=e.message)

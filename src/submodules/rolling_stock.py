@@ -4,8 +4,13 @@ from typing import Optional, List
 from .train import Train
 
 
+class UnknownTrainError(Exception):
+    message: str = "Train not found"
+
+
 @dataclass
 class RollingStock:
+    """Collection of registered trains"""
     trains: List[Train] = field(default_factory=list)
 
     def __getitem__(self, item):
@@ -24,16 +29,15 @@ class RollingStock:
         try:
             return self.trains[train_id]
         except IndexError:
-            return None
+            raise UnknownTrainError
 
     def get_train_list(self) -> list:
         # train_collection = {idx: train for idx, train in enumerate(self.trains)}
         train_collection = [train.get_dict_repr() for train in self.trains]
         return train_collection
 
-    def remove_train(self, train_id) -> bool:
+    def remove_train(self, train_id: int) -> None:
         try:
             self.trains.pop(train_id)
         except IndexError:
-            return False
-        return True
+            raise UnknownTrainError
