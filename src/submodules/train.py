@@ -27,11 +27,11 @@ class Train:
     update_callback: callable = field(default=None, repr=False)
     speed: str = field(default="STOP", init=False)
 
-    def update(self, speed=None, command=None):
+    def update(self, speed=None, command=None) -> None:
         """
         Update the status of the train. speed and other commands are kept separate,
         because the train stops if for example lights are toggled.
-        So the speed needs to be tranferred again every time
+        So the speed needs to be transferred again every time
 
         :param speed:
         :type port: str
@@ -44,25 +44,25 @@ class Train:
         # self.status(command, speed)
         self.update_callback(self.frequency, self.speed, command)
 
-    def toggle_light(self):
+    def toggle_light(self) -> None:
         self.update(command='LIGHT')
 
-    def play_sound(self, sound):
+    def play_sound(self, sound) -> None:
         if sound in ['SOUND1', 'SOUND2']:
             self.update(command=sound)
 
-    def horn(self):
+    def horn(self) -> None:
         self.update(command='HORN')
 
-    def set_name(self, name: str):
+    def set_name(self, name: str) -> None:
         self.name = name
 
-    def set_frequency(self, frequency: str):
+    def set_frequency(self, frequency: str) -> None:
         self.frequency = frequency
 
-    def set_box(self, box):
+    def set_box(self, box) -> None:
         self.box = box
 
-    def get_dict_repr(self):
+    def get_dict_repr(self) -> dict:
         """Returns a simplified dictionary suitable for JSON export"""
         return {key: value for key, value in self.__dict__.items() if key in EXPORT_FIELDS}

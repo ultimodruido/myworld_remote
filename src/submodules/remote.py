@@ -59,7 +59,7 @@ class Remote:
             self.ready = False
         return self.ready
 
-    def send(self, frequency, speed, command):
+    def send(self, frequency: str, speed: str, command: str) -> None:
         """
         Converts the instruction into binary code and transmits it.
         A double code will always be transmitted:
@@ -94,7 +94,7 @@ class Remote:
         if start_transfer:
             self._send(frequency, speed, command)
 
-    def _send(self, frequency, speed, function):
+    def _send(self, frequency: str, speed: str, function: str) -> None:
 
         pre_code = f"{FREQ[frequency]}{SPEED[speed]}{FUNCTION[function]}"
         # the second part of the code is inverted
@@ -107,7 +107,7 @@ class Remote:
         print(f"Sending over serial: {frequency} - s: {speed} - fz: {function} ~~ code: {cmd_code[:-2]}")
         self.serial.write(cmd_code.encode())
 
-    def close(self):
+    def close(self) -> None:
         if self.ready:
             self.serial.close()
         else:

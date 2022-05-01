@@ -15,7 +15,7 @@ rolling_stock = RollingStock()
 ########################
 # Main loop for updating status transmission
 ########################
-async def main_loop():
+async def main_loop() -> None:
     """Maerklin MyWorld trains are configured to automatically shutdown if no command is sent for a longer period.
     With a simple infinite loop that transmits the train status every few seconds we ensure that every train is
     running as desired.
@@ -34,7 +34,7 @@ async def main_loop():
 ########################
 # Start & Stop events handlers
 ########################
-async def startup():
+async def startup() -> None:
     """Grab the uvicorn event loop to add the main_loop function as a task.
     Load previous settings if available"""
 
@@ -50,7 +50,7 @@ async def startup():
         remote.configure(saved_config['port'])
 
 
-async def shutdown():
+async def shutdown() -> None:
     """Store settings to file, and properly close the serial communication."""
     save_settings(remote.port, rolling_stock.get_train_list())
     remote.close()

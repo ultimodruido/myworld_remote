@@ -1,5 +1,5 @@
 import uvicorn
-VERSION = "0.2.3"
+VERSION = "0.2.4"
 
 if __name__ == "__main__":
     print(f"Starting Maerklin MyWorld universal remote v{VERSION}")
