@@ -64,14 +64,14 @@ async def register_remote(request: Request,
 ######################
 @router.post("/register/newtrain/{train_name}/{frequency}", response_model=Message)
 async def register_train(request: Request,
-                         train_name: int = Path(..., description=param_doc['train_name']),
+                         train_name: str = Path(..., description=param_doc['train_name']),
                          frequency: str = Path(..., description=param_doc['frequency'])
                          ):
     """
     Add a new train
     """
     async with data_protection_lock:
-        rolling_stock.add_train(train_name, frequency, remote.send)
+        rolling_stock.add_train(train_name, frequency, "", remote.send)
     return reply(request.url.path, True)
 
 

@@ -4,9 +4,10 @@ Provides a class Train that describes a Maerklin MyWorld toy
 It stores the information about active protocol and speed setting.
 """
 from dataclasses import dataclass, field
+from typing import TypeVar
 
 EXPORT_FIELDS = ['name', 'frequency', 'box']
-
+TrainDict = TypeVar('TrainDict')
 
 @dataclass
 class Train:
@@ -63,6 +64,6 @@ class Train:
     def set_box(self, box) -> None:
         self.box = box
 
-    def get_dict_repr(self) -> dict:
+    def get_dict_repr(self) -> TrainDict:
         """Returns a simplified dictionary suitable for JSON export"""
         return {key: value for key, value in self.__dict__.items() if key in EXPORT_FIELDS}

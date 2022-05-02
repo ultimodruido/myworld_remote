@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
-from typing import Optional, List
+from typing import List
 
-from .train import Train
+from .train import Train, TrainDict
 
 
 class UnknownTrainError(Exception):
@@ -31,7 +31,7 @@ class RollingStock:
         except IndexError:
             raise UnknownTrainError
 
-    def get_train_list(self) -> List[Train]:
+    def get_train_list(self) -> List[TrainDict]:
         # train_collection = {idx: train for idx, train in enumerate(self.trains)}
         train_collection = [train.get_dict_repr() for train in self.trains]
         return train_collection
