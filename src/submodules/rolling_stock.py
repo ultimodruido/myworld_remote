@@ -30,6 +30,8 @@ class RollingStock:
             return self.trains[train_id]
         except IndexError:
             raise UnknownTrainError
+        except TypeError:
+            raise UnknownTrainError
 
     def get_train_list(self) -> List[TrainDict]:
         # train_collection = {idx: train for idx, train in enumerate(self.trains)}
@@ -40,4 +42,6 @@ class RollingStock:
         try:
             self.trains.pop(train_id)
         except IndexError:
+            raise UnknownTrainError
+        except TypeError:
             raise UnknownTrainError

@@ -1,6 +1,6 @@
 """
 Module: settings
-This module offers to fuction to save and read configuration on a local file.
+This module offers to function to save and read configuration on a local file.
 """
 import json
 from typing import Optional, Dict, List

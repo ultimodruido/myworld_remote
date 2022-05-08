@@ -7,4 +7,4 @@ pydantic~=1.9.0
 sphinx
 sphinx_rtd_theme
 pyinstaller
-
+pytest

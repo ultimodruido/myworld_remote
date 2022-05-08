@@ -9,6 +9,7 @@ from typing import TypeVar
 EXPORT_FIELDS = ['name', 'frequency', 'box']
 TrainDict = TypeVar('TrainDict')
 
+
 @dataclass
 class Train:
     """
@@ -35,10 +36,10 @@ class Train:
         So the speed needs to be transferred again every time
 
         :param speed:
-        :type port: str
+        :type speed: str
 
         :param command:
-        :type port: str
+        :type command: str
         """
         if speed:
             self.speed = speed
@@ -61,7 +62,7 @@ class Train:
     def set_frequency(self, frequency: str) -> None:
         self.frequency = frequency
 
-    def set_box(self, box) -> None:
+    def set_box(self, box: str) -> None:
         self.box = box
 
     def get_dict_repr(self) -> TrainDict:

@@ -25,7 +25,7 @@ class Remote:
 
         Create a simple button and move the train with protocol 'H' and toggle the lights::
 
-            r = Remote()
+            r = Remote('COM7')
             r.send('H', 'F1', 'LIGHT')
 
         :param port: the port name of the simulated serial port on the playground express
