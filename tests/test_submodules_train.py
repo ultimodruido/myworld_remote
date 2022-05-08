@@ -75,6 +75,12 @@ def test_set_box():
     t.set_box('11231')
     assert t.box == '11231'
 
+    with pytest.raises(TypeError):
+        t.set_box(1)
+
+    with pytest.raises(TypeError):
+        t.set_box({'test': 'test'})
+
 
 def test_get_dict_repr():
     update_callback_mock = Mock()

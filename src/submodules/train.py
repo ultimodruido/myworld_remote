@@ -69,6 +69,8 @@ class Train:
         self.frequency = frequency
 
     def set_box(self, box: str) -> None:
+        if type(box) is not str:
+            raise TypeError
         self.box = box
 
     def get_dict_repr(self) -> TrainDict:
