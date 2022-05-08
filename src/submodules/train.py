@@ -6,6 +6,8 @@ It stores the information about active protocol and speed setting.
 from dataclasses import dataclass, field
 from typing import TypeVar
 
+from submodules import protocol
+
 EXPORT_FIELDS = ['name', 'frequency', 'box']
 TrainDict = TypeVar('TrainDict')
 
@@ -60,6 +62,10 @@ class Train:
         self.name = name
 
     def set_frequency(self, frequency: str) -> None:
+        if type(frequency) is not str:
+            raise TypeError
+        if frequency not in protocol.FREQ:
+            raise protocol.UnknownFrequency
         self.frequency = frequency
 
     def set_box(self, box: str) -> None:

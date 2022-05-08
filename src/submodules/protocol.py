@@ -93,6 +93,10 @@ Result::
 Refer to the playground firmware to convert the bits into pulses.
 """
 
+
+###############
+# Constants
+###############
 SPEED_SIGNALS = ['STOP', 'F1', 'F2', 'F3', 'B1', 'B2', 'B3', 'SOS']
 FUNCTION_SIGNALS = ['NO_FN', 'LIGHT', 'SOUND1', 'HORN', 'SOUND2']
 
@@ -120,3 +124,10 @@ FUNCTION = {
     'SOUND2': '011',
     'LIGHT': '100',
 }
+
+
+###############
+# Exception
+###############
+class UnknownFrequency(Exception):
+    pass

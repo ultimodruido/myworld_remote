@@ -55,10 +55,10 @@ def test_set_train_name_wrong_input2():
 
 
 def test_set_train_frequency():
-    response = client.post("/register/train/0/frequency/P")
+    response = client.post("/register/train/0/frequency/G")
     assert response.status_code == 200
     response_dict = json.loads(response.text)
-    expected_response = {"entry_point": "/register/train/0/frequency/P",
+    expected_response = {"entry_point": "/register/train/0/frequency/G",
                          "result": True,
                          "data": {}
                          }

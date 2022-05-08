@@ -1,5 +1,6 @@
 import pytest
 
+from submodules.protocol import UnknownFrequency
 from submodules.train import Train
 from unittest.mock import Mock
 
@@ -58,8 +59,14 @@ def test_set_frequency():
     t.set_frequency('G')
     assert t.frequency == 'G'
 
-    #with pytest.raises(TypeError):
-    #    t.set_frequency(1)
+    with pytest.raises(TypeError):
+        t.set_frequency(1)
+
+    with pytest.raises(TypeError):
+        t.set_frequency({'test': 'test'})
+
+    with pytest.raises(UnknownFrequency):
+        t.set_frequency('Q')
 
 
 def test_set_box():
