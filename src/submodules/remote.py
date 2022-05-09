@@ -59,7 +59,7 @@ class Remote:
             self.ready = False
         return self.ready
 
-    def send(self, frequency: str, speed: str, command: str) -> None:
+    def send(self, frequency: str, speed: str, command: Optional[str]) -> None:
         """
         Converts the instruction into binary code and transmits it.
         A double code will always be transmitted:

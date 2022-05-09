@@ -1,6 +1,7 @@
 import pytest
 
-from submodules.rolling_stock import RollingStock, UnknownTrainError
+from submodules.rolling_stock import RollingStock
+from server_exceptions import UnknownTrainError
 
 
 def test_add_train():

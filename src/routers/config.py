@@ -6,7 +6,7 @@ from fastapi import APIRouter, Request, Path
 
 from server_deps import rolling_stock, remote, reply, Message
 from server_lock import data_protection_lock
-from submodules.rolling_stock import UnknownTrainError
+from server_exceptions import UnknownFrequencyError, UnknownTrainError
 
 from .params_docstring import param_doc
 
@@ -106,6 +106,8 @@ async def set_train_frequency(request: Request,
             train.set_frequency(frequency)
             return reply(request.url.path, True)
         except UnknownTrainError as e:
+            return reply(request.url.path, False, error=e.message)
+        except UnknownFrequencyError as e:
             return reply(request.url.path, False, error=e.message)
 
 

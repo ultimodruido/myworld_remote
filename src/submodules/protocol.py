@@ -125,9 +125,3 @@ FUNCTION = {
     'LIGHT': '100',
 }
 
-
-###############
-# Exception
-###############
-class UnknownFrequency(Exception):
-    pass

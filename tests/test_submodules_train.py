@@ -1,6 +1,6 @@
 import pytest
 
-from submodules.protocol import UnknownFrequency
+from server_exceptions import UnknownFrequencyError
 from submodules.train import Train
 from unittest.mock import Mock
 
@@ -65,7 +65,7 @@ def test_set_frequency():
     with pytest.raises(TypeError):
         t.set_frequency({'test': 'test'})
 
-    with pytest.raises(UnknownFrequency):
+    with pytest.raises(UnknownFrequencyError):
         t.set_frequency('Q')
 
 

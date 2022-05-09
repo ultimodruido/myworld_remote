@@ -1,11 +1,8 @@
 from dataclasses import dataclass, field
 from typing import List
 
+from server_exceptions import UnknownTrainError
 from .train import Train, TrainDict
-
-
-class UnknownTrainError(Exception):
-    message: str = "Train not found"
 
 
 @dataclass

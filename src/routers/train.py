@@ -7,7 +7,7 @@ from enum import Enum
 
 from server_deps import rolling_stock, reply, Message
 from server_lock import data_protection_lock
-from submodules.rolling_stock import UnknownTrainError
+from server_exceptions import UnknownTrainError
 
 from .params_docstring import param_doc
 

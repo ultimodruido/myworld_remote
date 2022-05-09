@@ -6,6 +6,7 @@ It stores the information about active protocol and speed setting.
 from dataclasses import dataclass, field
 from typing import TypeVar
 
+from server_exceptions import UnknownFrequencyError
 from submodules import protocol
 
 EXPORT_FIELDS = ['name', 'frequency', 'box']
@@ -14,17 +15,6 @@ TrainDict = TypeVar('TrainDict')
 
 @dataclass
 class Train:
-    """
-        Class used to handle the communication with the playground express and use it as a remote
-
-        Create a simple button and move the train with protocol 'H' and toggle the lights::
-
-            r = Remote()
-            r.send('H', 'F1', 'LIGHT')
-
-        :param port: the port name of the simulated serial port on the playground express
-        :type port: str
-    """
     name: str
     frequency: str
     box: str
@@ -65,7 +55,7 @@ class Train:
         if type(frequency) is not str:
             raise TypeError
         if frequency not in protocol.FREQ:
-            raise protocol.UnknownFrequency
+            raise UnknownFrequencyError
         self.frequency = frequency
 
     def set_box(self, box: str) -> None:
