@@ -59,6 +59,9 @@ class ModelSpeedValue(str, Enum):
     B2 = "B2"
     B3 = "B3"
 
+    def __str__(self):
+        return self.value
+
 
 @router.post("/train/{train_id}/speed/{speed_value}", response_model=Message)
 async def set_train_speed(request: Request,
@@ -71,8 +74,9 @@ async def set_train_speed(request: Request,
     async with data_protection_lock:
         try:
             train = rolling_stock.get_train_by_id(train_id)
-            train.update(speed=speed_value)
-            return reply(request.url.path, True)
+            # store the speed as a string to comply with typehint
+            train.update(speed=str(speed_value))
+            return reply(request.url.path, True, train=train.get_dict_repr(full_export=True))
         except UnknownTrainError as e:
             return reply(request.url.path, False, error=e.message)
 
@@ -88,7 +92,7 @@ async def toggle_train_light(request: Request,
         try:
             train = rolling_stock.get_train_by_id(train_id)
             train.toggle_light()
-            return reply(request.url.path, True)
+            return reply(request.url.path, True, train=train.get_dict_repr(full_export=True))
         except UnknownTrainError as e:
             return reply(request.url.path, False, error=e.message)
 
@@ -104,7 +108,7 @@ async def blow_train_horn(request: Request,
         try:
             train = rolling_stock.get_train_by_id(train_id)
             train.horn()
-            return reply(request.url.path, True)
+            return reply(request.url.path, True, train=train.get_dict_repr(full_export=True))
         except UnknownTrainError as e:
             return reply(request.url.path, False, error=e.message)
 
@@ -120,7 +124,7 @@ async def train_sound1(request: Request,
         try:
             train = rolling_stock.get_train_by_id(train_id)
             train.play_sound('SOUND1')
-            return reply(request.url.path, True)
+            return reply(request.url.path, True, train=train.get_dict_repr(full_export=True))
         except UnknownTrainError as e:
             return reply(request.url.path, False, error=e.message)
 
@@ -136,6 +140,6 @@ async def train_sound2(request: Request,
         try:
             train = rolling_stock.get_train_by_id(train_id)
             train.play_sound('SOUND2')
-            return reply(request.url.path, True)
+            return reply(request.url.path, True, train=train.get_dict_repr(full_export=True))
         except UnknownTrainError as e:
             return reply(request.url.path, False, error=e.message)

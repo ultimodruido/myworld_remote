@@ -38,7 +38,15 @@ def test_set_train_speed():
     response = client.post("/train/0/speed/F1")
     assert response.status_code == 200
     response_dict = json.loads(response.text)
-    expected_response = {"entry_point": "/train/0/speed/F1", "result": True, "data": {}}
+    expected_response = {"entry_point": "/train/0/speed/F1",
+                         "result": True,
+                         "data": {
+                             'train': {'box': '',
+                                       'frequency': 'T',
+                                       'name': 'funky_train',
+                                       'speed': 'F1'
+                                       }
+                         }}
     assert response_dict == expected_response
 
 
@@ -48,7 +56,15 @@ def test_toggle_train_light():
     response = client.post("/train/0/light")
     assert response.status_code == 200
     response_dict = json.loads(response.text)
-    expected_response = {"entry_point": "/train/0/light", "result": True, "data": {}}
+    expected_response = {"entry_point": "/train/0/light",
+                         "result": True,
+                         "data": {
+                             'train': {'box': '',
+                                       'frequency': 'T',
+                                       'name': 'funky_train',
+                                       'speed': 'F1'
+                                       }
+                         }}
     assert response_dict == expected_response
 
 
@@ -58,7 +74,15 @@ def test_blow_train_horn():
     response = client.post("/train/0/horn")
     assert response.status_code == 200
     response_dict = json.loads(response.text)
-    expected_response = {"entry_point": "/train/0/horn", "result": True, "data": {}}
+    expected_response = {"entry_point": "/train/0/horn",
+                         "result": True,
+                         "data": {
+                             'train': {'box': '',
+                                       'frequency': 'T',
+                                       'name': 'funky_train',
+                                       'speed': 'F1'
+                                       }
+                         }}
     assert response_dict == expected_response
 
 
@@ -68,10 +92,26 @@ def test_train_sound():
     response = client.post("/train/0/sound1")
     assert response.status_code == 200
     response_dict = json.loads(response.text)
-    expected_response = {"entry_point": "/train/0/sound1", "result": True, "data": {}}
+    expected_response = {"entry_point": "/train/0/sound1",
+                         "result": True,
+                         "data": {
+                             'train': {'box': '',
+                                       'frequency': 'T',
+                                       'name': 'funky_train',
+                                       'speed': 'F1'
+                                       }
+                         }}
     assert response_dict == expected_response
     response = client.post("/train/0/sound2")
     assert response.status_code == 200
     response_dict = json.loads(response.text)
-    expected_response = {"entry_point": "/train/0/sound2", "result": True, "data": {}}
+    expected_response = {"entry_point": "/train/0/sound2",
+                         "result": True,
+                         "data": {
+                             'train': {'box': '',
+                                       'frequency': 'T',
+                                       'name': 'funky_train',
+                                       'speed': 'F1'
+                                       }
+                         }}
     assert response_dict == expected_response

@@ -10,6 +10,7 @@ from server_exceptions import UnknownFrequencyError
 from submodules import protocol
 
 EXPORT_FIELDS = ['name', 'frequency', 'box']
+FULL_EXPORT_FIELDS = EXPORT_FIELDS + ['speed']
 TrainDict = TypeVar('TrainDict')
 
 
@@ -21,7 +22,7 @@ class Train:
     update_callback: callable = field(default=None, repr=False)
     speed: str = field(default="STOP", init=False)
 
-    def update(self, speed=None, command=None) -> None:
+    def update(self, speed: str = None, command: str = None) -> None:
         """
         Update the status of the train. speed and other commands are kept separate,
         because the train stops if for example lights are toggled.
@@ -63,6 +64,9 @@ class Train:
             raise TypeError
         self.box = box
 
-    def get_dict_repr(self) -> TrainDict:
+    def get_dict_repr(self, full_export: bool = False) -> TrainDict:
         """Returns a simplified dictionary suitable for JSON export"""
-        return {key: value for key, value in self.__dict__.items() if key in EXPORT_FIELDS}
+        if full_export:
+            return {key: value for key, value in self.__dict__.items() if key in FULL_EXPORT_FIELDS}
+        else:
+            return {key: value for key, value in self.__dict__.items() if key in EXPORT_FIELDS}
