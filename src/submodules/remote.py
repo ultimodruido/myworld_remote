@@ -96,7 +96,13 @@ class Remote:
 
     def _send(self, frequency: str, speed: str, function: str) -> None:
 
-        pre_code = f"{FREQ[frequency]}{SPEED[speed]}{FUNCTION[function]}"
+        try:
+            pre_code = f"{FREQ[frequency]}{SPEED[speed]}{FUNCTION[function]}"
+        except KeyError as e:
+            # if the precode cannot be generated, probably unknown frequencies are being requested.
+            # return and skip the transmission
+            print("Error while building the code, transmission skipped")
+            return
         # the second part of the code is inverted
         post_code = ''.join(_inverted_bit_char(c) for c in pre_code)
 
