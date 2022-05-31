@@ -28,7 +28,7 @@ async def main_loop() -> None:
                 print(f"updating train: {train}")
                 train.update()
 
-        await asyncio.sleep(5)
+        await asyncio.sleep(3)
 
 
 ########################
