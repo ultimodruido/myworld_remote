@@ -1,29 +1,55 @@
 Maerklin MyWorld universal remote
 =================================
 
-version number: 0.0.1
+version number: 1.0
+
 author: ultimodruido
 
 Overview
 --------
 
-Control all your Maerlin `MyWorld`_ trains from your PC
+Control all your [Maerklin MyWorld](https://www.maerklin.de/de/lp/2020/willkommen-bei-my-world) 
+trains from your PC.
+
 
 Requirements
 ------------
 
-You need a `circuitpython playground express <https://www.adafruit.com/product/3333>`_ to transmit IR signals to the trains.
+You need a [circuitpython playground express](https://www.adafruit.com/product/3333) to transmit IR signals to the trains.
 
 
 Usage
 -----
 
-The latest working executable for Windows is available in ./dist
+Copy the content of `playground_firmware/transmitter_routine.py` in a file named `code.py` on the circuit playground, 
+and the firmware will load automatically.
+A copy of adafruit library `adafruit_irremote.py` can be found in the directory `playground_firmware/lib`. 
+For a more recent version refer to the official 
+[adafruit circuitpython](https://docs.circuitpython.org/en/latest/docs/index.html) website.
+
+The latest working Windows executable file for the server is available in `./dist`
+
+On linux the server has to be started by hand:
+```
+python myworld.py -p 8000
+```
+
+Default port is 5000, with the `-p` parameter a different port can be set.
 
 Configuration
 -------------
 
-Example of a starting configuration file can be found in ./src/myworld.conf_example
-Rename the file in myworld.conf and place it in the same folder as the executable.
+Example of a starting configuration file can be found in `./src/myworld.conf_example`
+Rename the file in `myworld.conf` and place it in the same folder as the executable.
 
 It is not a mandatory step, the program will create its own configuration file.
+
+Refer to the [official documentation]() on read the doc for further details
+
+UI
+--
+
+This project contains only the server and the board firmware.
+A simple web interface is available in the [myworld_webui](github.com/ultimodruido/myworld_webui) repository.
+
+Alternatively, you can also build your own ;)

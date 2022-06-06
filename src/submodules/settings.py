@@ -7,6 +7,7 @@ from typing import Optional, Dict, List
 
 # Configuration filename
 FILE = 'myworld.conf'
+VERSION = '0.1'
 
 
 def load_settings() -> Optional[Dict]:
@@ -29,6 +30,7 @@ def save_settings(port: str, rolling_stock: List[Dict[str, str]]) -> bool:
     try:
         with open(FILE, mode='w', encoding='utf-8') as f:
             config = {
+                'version': VERSION,
                 'port': port,
                 'rolling_stock': rolling_stock
             }

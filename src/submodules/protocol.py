@@ -75,7 +75,7 @@ we need to add the bit inverted ::
 
 and the result is ::
 
-    code = 1 000 000   0 111 111
+    transmission_code = 1 000 000   0 111 111
 
 the signal starts with a pulse 4000 long and then uses the conversion explained
 at the top of the page to get the pulses length:

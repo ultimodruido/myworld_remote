@@ -8,22 +8,31 @@ For other OS (not tested) at the moment the only option is to clone the reposito
 
 
 
-The sever listens at the following link::
+The sever listens at the following local link::
 
     http://127.0.0.1:5000
 
-anyway the correct path is printed also on the console, example::
+The port can be change with the -p flag::
 
-    INFO:     Started server process [21068]
-    INFO:     Waiting for application startup.
-    INFO:     Application startup complete.
-    INFO:     Uvicorn running on http://127.0.0.1:5000 (Press CTRL+C to quit)
+    python myworld.py -p 8000
+
+The server is configured to answer also from remote devices, just change 127.0.0.1 with the IP address of your pc
+
+In order to be able to transmit infrared signals to the trains, two things are needed:
+
+* a configured Circuit playground express board
+* a configuration file
 
 
-in order to be able to transmit infrared signals to the trains, if no configuration file is provided,
-you have to register the serial port used to communicate with the circuit playground.
+To configure the board, copy the ``playground_firmware/transmitter_routine.py`` in the board memory
+and rename the file into ``code.py``. The board will reload automatically.
+In case of need in the ``playground_firmware/lib`` directory there is a copy of
+the ``adafruit_irremote.py`` library. Newer version are available on adafruit website.
 
-The API call to set up COM3 as communication port is the following::
+If no configuration file is provided, you have to register the serial port used to
+communicate with the circuit playground.
+
+The API call to set up, for example, COM3 as communication port, is the following::
 
     [POST] http://127.0.0.1:5000/register/remote/COM3
 
@@ -49,5 +58,6 @@ The train commands can bet sent through the following commands::
     [POST] http://127.0.0.1:5000/train/{train_id}/sound1
     [POST] http://127.0.0.1:5000/train/{train_id}/sound2
 
-You can refer to the `live API <http://127.0.0.1:8000/docs>`__ for an overview of the available options.
+You can refer to the live API for an overview of the available options: http://127.0.0.1:5000/docs
+Change the IP number and the port according to your configuration.
 
