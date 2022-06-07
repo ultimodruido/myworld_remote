@@ -50,6 +50,6 @@ UI
 --
 
 This project contains only the server and the board firmware.
-A simple web interface is available in the [myworld_webui](github.com/ultimodruido/myworld_webui) repository.
+A simple web interface is available in the [myworld_webui](https://github.com/ultimodruido/myworld_webui) repository.
 
 Alternatively, you can also build your own ;)
