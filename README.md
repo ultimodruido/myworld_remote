@@ -44,7 +44,7 @@ Rename the file in `myworld.conf` and place it in the same folder as the executa
 
 It is not a mandatory step, the program will create its own configuration file.
 
-Refer to the [official documentation]() on read the doc for further details
+Refer to the [official documentation](https://myworld-remote.readthedocs.io) on read the doc for further details
 
 UI
 --
