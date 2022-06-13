@@ -29,7 +29,24 @@ For a more recent version refer to the official
 
 The latest working Windows executable file for the server is available in `./dist`
 
-On linux the server has to be started by hand:
+If the executable is not an option, follow these steps to run the server from the command line:
+
+_clone the repository_
+```
+git clone https://github.com/ultimodruido/myworld_remote.git
+cd myworld_remote
+```
+_create and activate a python environment_
+```
+python.exe -m venv venv
+venv\Scripts\activate.bat (on Windows)
+source venv/bin/activate (on Linux or MacOS)
+```
+_install the requirements_
+```
+python.exe -m pip install -r requirements.txt
+```
+_now you are good to start_
 ```
 python myworld.py -p 8000
 ```
