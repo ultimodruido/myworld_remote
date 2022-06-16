@@ -63,6 +63,15 @@ It is not a mandatory step, the program will create its own configuration file.
 
 Refer to the [official documentation](https://myworld-remote.readthedocs.io) on read the doc for further details
 
+Limitation
+--
+
+Only frequencies __G__ and __H__ are usable with the system, because I have no train with other frequencies to decode.
+
+If you want to help, scan your remote and open an issue with your data in. 
+I will try to decode and include it into the software. Follow the instructions 
+in the [official roadmap](https://myworld-remote.readthedocs.io/en/latest/roadmap.html) to see how do I need the input.
+
 UI
 --
 
