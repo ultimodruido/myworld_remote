@@ -11,6 +11,9 @@ Overview
 Control all your [Maerklin MyWorld](https://www.maerklin.de/de/lp/2020/willkommen-bei-my-world) 
 trains from your PC.
 
+Maerklin My World train series is the plastic product line for 3+ kids. It is infrared controlled and battery powered.
+Build you own IR remote to control every train from a single source.
+
 
 Requirements
 ------------
