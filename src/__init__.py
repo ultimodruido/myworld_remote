@@ -2,17 +2,17 @@
 Maerklin MyWorld universal remote
 =================================
 
-Control all your Maerlin `MyWorld`_ trains from a single interface.
+Control all your Maerlin `MyWorld`_ trains from a centralized interface.
 
-The software uses a `circuitpython playground express`_ to transmit IR signals to the trains.
+The software requires a `circuitpython playground express`_ to transmit IR signals to the trains.
 
-The system is made of multiple elements:
+The software consists of multiple components:
 
 * Firmware to be downloaded on the playground express.
 * Web framework API (based on `FastAPI`_) to receive inputs from multiple UIs.
 
 .. note::
-    A UI is not included.
+    A UI is not included. For UI see for example `MyWorld UI`_
 
 .. warning::
     The software can at the moment replicate only frequencies G and H. See the *Protocol* section for details.
@@ -20,4 +20,5 @@ The system is made of multiple elements:
 .. _circuitpython playground express: https://www.adafruit.com/product/3333
 .. _MyWorld: https://www.maerklin.de/de/lp/2020/willkommen-bei-my-world
 .. _FastAPI: https://fastapi.tiangolo.com
+.. _MyWorld UI: https://github.com/ultimodruido/myworld_webui
 """

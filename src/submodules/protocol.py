@@ -32,27 +32,27 @@ In the following code snippets the meaning of each bit will be explained.
 
 ::
 
-FREQ = {
-    'G': '0',
-    'H': '1',
-    'U': '00110',
-    'V': '00111',
-}
+    FREQ = {
+        'G': '0',
+        'H': '1',
+        'U': '00110',
+        'V': '00111',
+    }
 
 .. data:: 3 bits: speed selector, obtained by the SPEED dictionary
 
 ::
 
-        SPEED = {
-            'STOP': '000',
-            'F1': '001',
-            'F2': '010',
-            'F3': '011',
-            'B1': '100',
-            'B2': '101',
-            'B3': '110',
-            'SOS': '111',
-        }
+    SPEED = {
+        'STOP': '000',
+        'F1': '001',
+        'F2': '010',
+        'F3': '011',
+        'B1': '100',
+        'B2': '101',
+        'B3': '110',
+        'SOS': '111',
+    }
 
 .. data:: 3 bits: function selector, obtained by the FUNCTION dictionary
 
