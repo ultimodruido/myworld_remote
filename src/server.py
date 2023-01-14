@@ -31,10 +31,10 @@ async def root():
 async def startup_event():
     """Grab the uvicorn event loop to add the main_loop function as a task.
     Load previous settings if available"""
-    await startup()
+    await startup(app)
 
 
 @app.on_event("shutdown")
 async def shutdown_event():
     """Clean the serial port and save the status settings"""
-    await shutdown()
+    await shutdown(app)

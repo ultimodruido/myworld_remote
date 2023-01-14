@@ -4,8 +4,8 @@ Module: router - config
 """
 from fastapi import APIRouter, Request, Path
 
-from server_deps import rolling_stock, remote, reply, Message
-from server_lock import data_protection_lock
+from server_deps import reply, Message
+from server_deps import remote, rolling_stock, lock
 from server_exceptions import UnknownFrequencyError, UnknownTrainError
 
 from .params_docstring import param_doc
@@ -35,7 +35,7 @@ async def remote_status(request: Request):
           }
         }
     """
-    return reply(request.url.path, True, port=remote.port, status=remote.ready)
+    return reply(request.url.path, True, port=remote(request.app).port, status=remote(request.app).ready)
 
 
 @router.post("/register/remote/{port_name}", response_model=Message)
@@ -55,7 +55,7 @@ async def register_remote(request: Request,
             "data": {}
         }
     """
-    status = remote.configure(port_name)
+    status = remote(request.app).configure(port_name)
     return reply(request.url.path, status)
 
 
@@ -70,8 +70,8 @@ async def register_train(request: Request,
     """
     Add a new train
     """
-    async with data_protection_lock:
-        rolling_stock.add_train(train_name, frequency, "", remote.send)
+    async with lock(request.app):
+        rolling_stock(request.app).add_train(train_name, frequency, "", remote(request.app).send)
     return reply(request.url.path, True)
 
 
@@ -83,9 +83,9 @@ async def set_train_name(request: Request,
     """
     Rename a registered train
     """
-    async with data_protection_lock:
+    async with lock(request.app):
         try:
-            train = rolling_stock.get_train_by_id(train_id)
+            train = rolling_stock(request.app).get_train_by_id(train_id)
             train.set_name(train_name)
             return reply(request.url.path, True)
         except UnknownTrainError as e:
@@ -100,9 +100,9 @@ async def set_train_frequency(request: Request,
     """
     Change communication frequency of a registered train
     """
-    async with data_protection_lock:
+    async with lock(request.app):
         try:
-            train = rolling_stock.get_train_by_id(train_id)
+            train = rolling_stock(request.app).get_train_by_id(train_id)
             train.set_frequency(frequency)
             return reply(request.url.path, True)
         except UnknownTrainError as e:
@@ -119,9 +119,9 @@ async def set_train_box(request: Request,
     """
     Add a box number to a registered train
     """
-    async with data_protection_lock:
+    async with lock(request.app):
         try:
-            train = rolling_stock.get_train_by_id(train_id)
+            train = rolling_stock(request.app).get_train_by_id(train_id)
             train.set_box(box_number)
             return reply(request.url.path, True)
         except UnknownTrainError as e:
@@ -134,9 +134,9 @@ async def remove_train(request: Request,
     """
     Remove a registered train
     """
-    async with data_protection_lock:
+    async with lock(request.app):
         try:
-            rolling_stock.remove_train(train_id)
+            rolling_stock(request.app).remove_train(train_id)
             return reply(request.url.path, True)
         except UnknownTrainError as e:
             return reply(request.url.path, False, error=e.message)

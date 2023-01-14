@@ -48,15 +48,17 @@ class Remote:
         :param port: port name, example 'COM3'
         :type port: str
         """
-        print(f"remote: configured serial port {port}")
+
         try:
             self.serial = Serial(port, 115200)  # open serial port
             self.ready = True
             self.port = port
+            print(f"[i] Remote: configured serial port {port}")
         except Exception as e:
             print(e)
             self.port = ''
             self.ready = False
+            print(f"[E] Remote: impossible to configure serial port {port}")
         return self.ready
 
     def send(self, frequency: str, speed: str, command: Optional[str]) -> None:
@@ -93,7 +95,8 @@ class Remote:
             start_transfer = False
         if start_transfer:
             self._send(frequency, speed, command)
-
+        else:
+            print("[E] Remote: transmission skipped, not ready")
     def _send(self, frequency: str, speed: str, function: str) -> None:
 
         try:
@@ -101,7 +104,7 @@ class Remote:
         except KeyError as e:
             # if the precode cannot be generated, probably unknown frequencies are being requested.
             # return and skip the transmission
-            print("Error while building the code, transmission skipped")
+            print("[E] Remote: error while building the code, transmission skipped")
             return
         # the second part of the code is inverted
         post_code = ''.join(_inverted_bit_char(c) for c in pre_code)
@@ -110,11 +113,11 @@ class Remote:
 
         # print(f"f: {frequency} - s: {speed} - fz: {function}")
         # print(f"playgroung code: {cmd_code}")
-        print(f"Sending over serial: {frequency} - s: {speed} - fz: {function} ~~ code: {cmd_code[:-2]}")
+        print(f"[I] Remote: sending over serial: {frequency} - s: {speed} - fz: {function} ~~ code: {cmd_code[:-2]}")
         self.serial.write(cmd_code.encode())
 
     def close(self) -> None:
         if self.ready:
             self.serial.close()
         else:
-            print("Transmission skipped: not ready")
+            print("[E] Remote: transmission skipped: not ready")

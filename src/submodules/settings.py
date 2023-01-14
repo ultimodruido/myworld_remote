@@ -18,8 +18,10 @@ def load_settings() -> Optional[Dict]:
     try:
         with open(FILE, encoding='utf-8') as f:
             config = json.load(f)
+            print('[I] Settings: settings loaded')
             return config
     except:
+        print('[E] Settings: error while loading settings')
         return None
 
 
@@ -35,7 +37,8 @@ def save_settings(port: str, rolling_stock: List[Dict[str, str]]) -> bool:
                 'rolling_stock': rolling_stock
             }
             json.dump(config, f, ensure_ascii=False)
+            print('[I] Settings: settings saved')
             return True
     except:
-        print('Error while savings settings')
+        print('[E] Settings: error while savings settings')
         return False
