@@ -1,12 +1,13 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from server_deps import startup, shutdown
-from routers import train, config
+from routers import train, config, emergency
 
 
 app = FastAPI()
 app.include_router(train.router)
 app.include_router(config.router)
+app.include_router(emergency.router)
 
 origins = [
     "http://localhost:*",

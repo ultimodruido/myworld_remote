@@ -97,6 +97,7 @@ class Remote:
             self._send(frequency, speed, command)
         else:
             print("[E] Remote: transmission skipped, not ready")
+
     def _send(self, frequency: str, speed: str, function: str) -> None:
 
         try:
