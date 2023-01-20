@@ -22,7 +22,7 @@ The IR protocol pulses length used by Maerklin are as follow::
     bit 1 -> 500 + 1500
 
 .. WARNING ::
-    At the moment only frequencies G, H, U and V have been decoded.
+    At the moment only frequencies G, H, U, V, X and W have been decoded.
 
 A signal is between 14 and 18 bits long, each signal is divided into 2 sequences of equal length.
 The second sequence is just like the first one, but with each bit inverted.
@@ -37,6 +37,8 @@ In the following code snippets the meaning of each bit will be explained.
         'H': '1',
         'U': '00110',
         'V': '00111',
+        'W': '01000',
+        'X': '01001',
     }
 
 .. data:: 3 bits: speed selector, obtained by the SPEED dictionary
@@ -108,6 +110,8 @@ FREQ = {
     'H': '1',
     'U': '00110',
     'V': '00111',
+    'W': '01000',
+    'X': '01001',
 }
 
 SPEED = {
