@@ -12,10 +12,11 @@ The software consists of multiple components:
 * Web framework API (based on `FastAPI`_) to receive inputs from multiple UIs.
 
 .. note::
-    A UI is not included. For UI see for example `MyWorld UI`_
+    A UI is not included. If you are looking for a UI, check for example `MyWorld UI`_
 
 .. warning::
-    The software can at the moment replicate only frequencies G and H. See the *Protocol* section for details.
+    The software can at the moment replicate only frequencies G, H, U, V, W and X.
+    See the *Protocol* section for details.
 
 .. _circuitpython playground express: https://www.adafruit.com/product/3333
 .. _MyWorld: https://www.maerklin.de/de/lp/2020/willkommen-bei-my-world

@@ -12,6 +12,7 @@ For details refer to the official
 `help page <https://learn.adafruit.com/adafruit-circuit-playground-express?view=all>`__
 .
 The library ``adafruit_irremote.py`` is required. A copy is available in the ``playground_firmware/lib`` directory.
+
 .. data:: decode.py
 
 This script is used to decode the signals from the remote.
@@ -24,5 +25,5 @@ An example of the output printed when pressing a button on the original remote  
 
 .. data:: transmitter_routine.py
 
-This script convert the received bis over serial link into pulses for the IR transmitter.
-It blinks the red led when transmitting.
+This script convert the received bits over serial link into pulses for the IR transmitter.
+The red led of the express playground blinks when transmitting.

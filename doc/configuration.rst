@@ -6,7 +6,7 @@ It contains:
 * the serial port used to communicate with the playground express
 * the list of configured trains
 
-As of release 0.1 each train has 3 settings:
+As of release 1.0 each train has 3 settings:
 
 * name: transmitted to the UI for identification purposes
 * frequency: used frequency to communicate with the train
@@ -34,3 +34,4 @@ Example of a starting configuration file can be found in ``./src/myworld.conf_ex
             }
           ]
         }
+

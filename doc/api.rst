@@ -3,14 +3,14 @@ API
 
 System functionalities can be accessed and configured using a restful API.
 For a detailed documentation of the API, please refer to the live documentation
-accessible at the following `link`_  when the server is running.
+accessible at the address `http://127.0.0.1:5000/docs`_  when the server is running.
 
 It contains all the information about possible commands, the necessary parameters
 as well as the result scheme.
 In addition, clicking the button "Try it out" it is possible to send commands to the
 server making the documentation page a very limited, but functional, UI.
 
-.. _link: http://127.0.0.1:5000/docs
+.. _http://127.0.0.1:5000/docs: http://127.0.0.1:5000/docs
 
 The reply from the server follows a pre-defined scheme: a dictionary serialized to JSON::
 
@@ -30,4 +30,3 @@ It has always "entry_point", "result" and "data" keys. Only the first two are al
 
 The "data" key is filled only when additional information has to be transferred back to the client.
 Its content depends on the request.
-
