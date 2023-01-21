@@ -2,7 +2,7 @@ import uvicorn
 import argparse
 
 
-VERSION = "1.0"
+VERSION = "1.2"
 
 
 if __name__ == "__main__":
